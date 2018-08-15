@@ -106,7 +106,11 @@ if __name__ == '__main__':
     cflib.crtp.init_drivers(enable_debug_driver=False)
     # Scan for Crazyflies and use the first one found
     print('Scanning interfaces for Crazyflies...')
-    available = cflib.crtp.scan_interfaces()
+    addr = 0xE7E7E7E7E0
+    for i in range(0, 10):
+        print(hex(addr+i))
+        available = cflib.crtp.scan_interfaces(0xE7E7E7E7E2)
+
     print('Crazyflies found:')
     for i in available:
         print(i[0])

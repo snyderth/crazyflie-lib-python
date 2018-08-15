@@ -110,7 +110,15 @@ if __name__ == '__main__':
     # Initialize the low-level drivers (don't list the debug drivers)
     cflib.crtp.init_drivers(enable_debug_driver=False)
     # Connect the two Crazyflies and ramps them up-down
-    le0 = MotorRampExample('radio://0/70/2M')
-    le1 = MotorRampExample('radio://1/80/250K')
-    while(le0.connected or le1.connected):
+    le0 = MotorRampExample('radio://0/100/2M/E7E7E7E7E0')
+    le1 = MotorRampExample('radio://0/100/2M/E7E7E7E7E1')
+    le2 = MotorRampExample('radio://0/100/2M/E7E7E7E7E2')
+    le3 = MotorRampExample('radio://0/100/2M/E7E7E7E7E3')
+    le4 = MotorRampExample('radio://0/100/2M/E7E7E7E7E4')
+    le5 = MotorRampExample('radio://0/100/2M/E7E7E7E7E5')
+    le6 = MotorRampExample('radio://0/100/2M/E7E7E7E7E6')
+    le7 = MotorRampExample('radio://0/100/2M/E7E7E7E7E7')
+    le8 = MotorRampExample('radio://0/100/2M/E7E7E7E7E8')
+    le9 = MotorRampExample('radio://0/100/2M/E7E7E7E7E9')
+    while(le0.connected or le1.connected or le2.connected or le3.connected or le4.connected or le5.connected or le6.connected or le7.connected or le8.connected or le9.connected):
         time.sleep(0.1)

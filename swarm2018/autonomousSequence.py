@@ -41,19 +41,19 @@ from cflib.crazyflie.syncCrazyflie import SyncCrazyflie
 from cflib.crazyflie.syncLogger import SyncLogger
 
 # URI to the Crazyflie to connect to
-uri = 'radio://0/100/2M/E7E7E7E7E7'
+uri = 'radio://0/100/2M/E7E7E7E7E1'
 
 # Change the sequence according to your setup
 #             x    y    z  YAW
 
 sequence = [
-    (2.5, 2.5, 1.2, 0),
-    (1.5, 2.5, 1.2, 0),
-    (4.0, 2.0, 1.2, 0),
-    (2.5, 2.5, 1.2, 0),
-    (4.0, 2.0, 1.2, 0),
-    (2.5, 2.5, 1.2, 0),
-    (2.5, 2.5, 0.4, 0),
+	    (2.5, 2.5, 1.6, 0),
+	    (1.5, 2.5, 1.3, 0),
+	    (4.0, 2.0, 1.5, 0),
+	    (2.5, 2.5, 1.2, 0),
+	    (4.0, 2.0, 1.2, 0),
+	    (2.5, 2.5, 1.5, 0),
+	    (2.5, 2.5, 0.4, 0),
 ]
 """
 sequence = [
@@ -73,8 +73,6 @@ sequence = [
 	(2.0,2.5,0.25,0),
 ]
 """
-
-
 def wait_for_position_estimator(scf):
     print('Waiting for estimator to find position...')
 
@@ -87,7 +85,7 @@ def wait_for_position_estimator(scf):
     var_x_history = [1000] * 10
     var_z_history = [1000] * 10
 
-    threshold = 0.005
+    threshold = 0.001
 
     with SyncLogger(scf, log_config) as logger:
         for log_entry in logger:
@@ -106,8 +104,8 @@ def wait_for_position_estimator(scf):
             min_z = min(var_z_history)
             max_z = max(var_z_history)
 
-            print('{} {} {}'.
-                  format(max_x - min_x, max_y - min_y, max_z - min_z))
+            print("{} {} {}".
+                   format(max_x - min_x, max_y - min_y, max_z - min_z))
 
             if (max_x - min_x) < threshold and (
                     max_y - min_y) < threshold and (
@@ -166,5 +164,5 @@ if __name__ == '__main__':
 
     with SyncCrazyflie(uri, cf=Crazyflie(rw_cache='./cache')) as scf:
         reset_estimator(scf)
-        # start_position_printing(scf)
+        print(start_position_printing(scf))
         run_sequence(scf, sequence)

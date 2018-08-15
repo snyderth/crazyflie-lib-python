@@ -167,7 +167,8 @@ class Swarm:
         """
         threads = []
         reporter = self.Reporter()
-
+        print('cfs.items:')
+        print(self._cfs.items())
         for uri, scf in self._cfs.items():
             args = [func, reporter] + \
                 self._process_args_dict(scf, uri, args_dict)

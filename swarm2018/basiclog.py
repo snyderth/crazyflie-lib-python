@@ -64,6 +64,9 @@ class LoggingExample:
         # Variable used to keep main loop occupied until disconnect
         self.is_connected = True
 
+        # self._lg_pos = LogConfig(name='Position', period_in_ms=10)
+
+
     def _connected(self, link_uri):
         """ This callback is called form the Crazyflie API when a Crazyflie
         has been connected and the TOCs have been downloaded."""
@@ -71,21 +74,33 @@ class LoggingExample:
 
         # The definition of the logconfig can be made before connecting
         self._lg_stab = LogConfig(name='Stabilizer', period_in_ms=10)
-        self._lg_stab.add_variable('stabilizer.roll', 'float')
-        self._lg_stab.add_variable('stabilizer.pitch', 'float')
-        self._lg_stab.add_variable('stabilizer.yaw', 'float')
+        # self._lg_stab.add_variable('stabilizer.roll', 'float')
+        # self._lg_stab.add_variable('stabilizer.pitch', 'float')
+        # self._lg_stab.add_variable('stabilizer.yaw', 'float')
+        self._lg_stab.add_variable('stateEstimate.x', 'float')
+        self._lg_stab.add_variable('stateEstimate.y', 'float')
+        self._lg_stab.add_variable('stateEstimate.z', 'float')
+        # self._lg_pos.add_variable('stateEstimate.x', 'float')
+        # self._lg_pos.add_variable('stateEstimate.y', 'float')
+        # self._lg_pos.add_variable('stateEstimate.z','float')
+
+
 
         # Adding the configuration cannot be done until a Crazyflie is
         # connected, since we need to check that the variables we
         # would like to log are in the TOC.
         try:
             self._cf.log.add_config(self._lg_stab)
+            # self._cf.log.add_config(self._lg_pos)
             # This callback will receive the data
             self._lg_stab.data_received_cb.add_callback(self._stab_log_data)
+            # self._lg_pos.data_received_cb.add_callback(self._pos_log_data)
             # This callback will be called on errors
             self._lg_stab.error_cb.add_callback(self._stab_log_error)
+            # self._lg_pos.error_cb.add_callback(self._pos_log_error)
             # Start the logging
             self._lg_stab.start()
+            # self._lg_pos.start()
         except KeyError as e:
             print('Could not start log configuration,'
                   '{} not found in TOC'.format(str(e)))
@@ -126,21 +141,24 @@ if __name__ == '__main__':
     cflib.crtp.init_drivers(enable_debug_driver=False)
     # Scan for Crazyflies and use the first one found
     print('Scanning interfaces for Crazyflies...')
-    for i in range(1, 10):
-        print(i)
-        addr = 'E7E7E7E7E' + str(i)
-        available = cflib.crtp.scan_interfaces(addr)
-    print('Crazyflies found:')
-    for i in available:
-        print(i[0])
+    available = []
+    # for i in range(1,10):
+    #     print(i)
+    #     addr = 0xE7E7E7E7E0 + i
+    #     available += cflib.crtp.scan_interfaces(addr)
+    #     print(available)
+    # print('Crazyflies found:')
+    # for i in available:
+    #     print(i[0])
 
-    if len(available) > 0:
-        le = LoggingExample(available[0][0])
-    else:
-        print('No Crazyflies found, cannot run example')
+    # if len(available) > 0:
+        # le = LoggingExample(available[0][0])
+    le = LoggingExample('radio://0/100/2M/E7E7E7E7E5')
+    # else:
+        # print('No Crazyflies found, cannot run example')
 
     # The Crazyflie lib doesn't contain anything to keep the application alive,
     # so this is where your application should do something. In our case we
     # are just waiting until we are disconnected.
-    while le.is_connected:
-        time.sleep(1)
+    #while le.is_connected:
+    #    time.sleep(1)

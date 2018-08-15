@@ -71,89 +71,78 @@ URI10 = 'radio://0/100/2M/E7E7E7E7E9'
 z0 = 1.0
 z = 1.5
 
-x0 = 1  # .4
-x1 = 2
-x2 = 3  # -0.4
+x0 = 2.8
+x1 = 2.8
+x2 = 3.5
 
-y0 = 1  # -1.0
-y1 = 1.5  # -0.4
-y2 = 2.5  # 0.4
-y3 = 1.5  # 1.0
+
+y0 = 1.9
+y1 = 2.5
+y2 = 2.2
 
 #    x   y   z  time
 sequence1 = [
-    # (x0, y0, z0, 30.0),
-    # (x0, y1, z, 30.0),
-    # (x0, y0, z0, 5.0),
-    (x0, y0, 1.0, 5.0),
-    (x1, y0, 1.8, 5.0),
-    (x2, y0, 1.5, 5.0),
+    (x0, y0, z0, 3.0),
+    (x0, y0, z, 30.0),
+    (x0, y0, z0, 3.0),
 ]
 
 sequence2 = [
-    (x0, y1, z0, 5.0),
+    (x0, y1, z0, 3.0),
     (x0, y1, z, 30.0),
-    (x0, y1, z0, 5.0),
+    (x0, y1, z0, 3.0),
 ]
 
 sequence3 = [
-    (x2, y2, z0, 30.0),
-    # (x0, y2, z, 30.0),
-    # (x0, y2, z0, 5.0),
-    # (x0, y2, 0.5, 5.0),
+    (x1, y1, z0, 3.0),
+    (x2, y2, z0, 7.0),
+    (x0, y0, z0, 7.0),
+    (x1, y1, z0, 3.0),
 ]
 
 sequence4 = [
-    # (x1, y3, z0, 30.0),
-    # (x0, y2, z, 30.0),
-    # (x0, y3, z0, 5.0),
-    (x0, y0, 1.0, 5.0),
-    (x1, y1, 1.5, 5.0),
-    (x2, y2, 1.5, 5.0),
-    (x0, y0, 0.5, 5.0),
-    (3.5, 3.5, 1.0, 5.0),
-    (4.0, 1.0, 1.5, 5.0),
-    (3.0, 3.0, 0.5, 5.0),
+    (x0, y0, z0, 3.0),
+    (x1, y1, z0, 7.0),
+    (x2, y2, z0, 7.0),
+    (x0, y0, z0, 3.0),
 ]
 
 sequence5 = [
-    (x1, y1, z0, 5.0),
-    (x1, y1, z, 5.0),
-    (x1, y1, z0, 5.0),
+    (x1, y0, z0, 3.0),
+    (x1, y0, z, 30.0),
+    (x1, y0, z0, 3.0),
 ]
 
 sequence6 = [
-    (x1, y2, z0, 5.0),
-    (x2, y1, z, 30.0),
-    (x1, y2, z0, 5.0),
+    (x1, y1, z0, 3.0),
+    (x2, y2, z0, 7.0),
+    (x0, y0, z0, 7.0),
+    (x1, y1, z0, 3.0),
 ]
 
 sequence7 = [
-    (x2, y0, z0, 7.0),
-    (x2, y0, z, 7.0),
-    (x2, y0, z0, 7.0),
+    (x2, y0, z0, 3.0),
+    (x2, y0, z0, 30.0),
+    (x2, y0, z0, 3.0),
 ]
 
 sequence8 = [
-    (x2, y1, z0, 5.0),
+    (x2, y1, z0, 3.0),
     (x2, y1, z, 30.0),
-    (x2, y1, z0, 5.0),
+    (x2, y1, z0, 3.0),
 ]
 
 sequence9 = [
-    (x2, y2, z0, 5.0),
+    (x2, y2, z0, 3.0),
     (x2, y2, z, 30.0),
-    (x2, y2, z0, 5.0),
+    (x2, y2, z0, 3.0),
 ]
 
 sequence10 = [
-    (1.0, 1.0, 1.0, 5.0),
-    (3.5, 1.0, 1.0, 5.0),
-    (3.5, 3.5, 1.0, 5.0),
-    (1.0, 3.5, 1.0, 5.0),
-    # (x2, y3, z0, 5.0),
-    # (x2, y3, z, 5.0),
-    # (x2, y3, z0, 5.0),
+    (x2, y2, z0, 3.0),
+    (x0, y0, z0, 7.0),
+    (x1, y1, z0, 7.0),
+    (x2, y2, z0, 3.0),
 ]
 
 seq_args = {
@@ -171,16 +160,16 @@ seq_args = {
 
 # List of URIs, comment the one you do not want to fly
 uris = {
-    #    URI1,
-    #    URI2,
-    #    URI3,
+    # URI1,
+    # URI2,
+    URI3,
     URI4,
-    #    URI5,
-    #    URI6,
-    #    URI7,
-    #    URI8,
-    #    URI9,
-    #    URI10
+    # URI5,
+    # URI6,
+    # URI7,
+    # URI8,
+    # URI9,
+    URI10
 }
 
 
@@ -229,6 +218,16 @@ def wait_for_param_download(scf):
     while not scf.cf.param.is_updated:
         time.sleep(1.0)
     print('Parameters downloaded for', scf.cf.link_uri)
+
+def start_position_printing(scf):
+    log_conf = LogConfig(name='Position', period_in_ms=500)
+    log_conf.add_variable('kalman.stateX', 'float')
+    log_conf.add_variable('kalman.stateY', 'float')
+    log_conf.add_variable('kalman.stateZ', 'float')
+    print(scf.cf.link_uri)
+    scf.cf.log.add_config(log_conf)
+    log_conf.data_received_cb.add_callback(position_callback)
+    log_conf.start()
 
 
 def reset_estimator(scf):
@@ -307,5 +306,5 @@ if __name__ == '__main__':
         # flying.
         print('Waiting for parameters to be downloaded...')
         swarm.parallel(wait_for_param_download)
-
+        swarm.parallel(start_position_printing)
         swarm.parallel(run_sequence, args_dict=seq_args)

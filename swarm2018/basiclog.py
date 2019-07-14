@@ -73,16 +73,17 @@ class LoggingExample:
         print('Connected to %s' % link_uri)
 
         # The definition of the logconfig can be made before connecting
-        self._lg_stab = LogConfig(name='Stabilizer', period_in_ms=10)
+        #self._lg_stab = LogConfig(name='Stabilizer', period_in_ms=10)
         # self._lg_stab.add_variable('stabilizer.roll', 'float')
         # self._lg_stab.add_variable('stabilizer.pitch', 'float')
         # self._lg_stab.add_variable('stabilizer.yaw', 'float')
-        self._lg_stab.add_variable('stateEstimate.x', 'float')
-        self._lg_stab.add_variable('stateEstimate.y', 'float')
-        self._lg_stab.add_variable('stateEstimate.z', 'float')
-        # self._lg_pos.add_variable('stateEstimate.x', 'float')
-        # self._lg_pos.add_variable('stateEstimate.y', 'float')
-        # self._lg_pos.add_variable('stateEstimate.z','float')
+        # self._lg_stab.add_variable('stateEstimate.x', 'float')
+        # self._lg_stab.add_variable('stateEstimate.y', 'float')
+        # self._lg_stab.add_variable('stateEstimate.z', 'float')
+        self._lg_pos = LogConfig(name='Position', period_in_ms=10)
+        self._lg_pos.add_variable('stateEstimate.x', 'float')
+        self._lg_pos.add_variable('stateEstimate.y', 'float')
+        self._lg_pos.add_variable('stateEstimate.z','float')
 
 
 
@@ -90,17 +91,17 @@ class LoggingExample:
         # connected, since we need to check that the variables we
         # would like to log are in the TOC.
         try:
-            self._cf.log.add_config(self._lg_stab)
-            # self._cf.log.add_config(self._lg_pos)
+            # self._cf.log.add_config(self._lg_stab)
+            self._cf.log.add_config(self._lg_pos)
             # This callback will receive the data
-            self._lg_stab.data_received_cb.add_callback(self._stab_log_data)
-            # self._lg_pos.data_received_cb.add_callback(self._pos_log_data)
+            # self._lg_stab.data_received_cb.add_callback(self._stab_log_data)
+            self._lg_pos.data_received_cb.add_callback(self._pos_log_data)
             # This callback will be called on errors
-            self._lg_stab.error_cb.add_callback(self._stab_log_error)
-            # self._lg_pos.error_cb.add_callback(self._pos_log_error)
+            # self._lg_stab.error_cb.add_callback(self._stab_log_error)
+            self._lg_pos.error_cb.add_callback(self._pos_log_error)
             # Start the logging
-            self._lg_stab.start()
-            # self._lg_pos.start()
+            # self._lg_stab.start()
+            self._lg_pos.start()
         except KeyError as e:
             print('Could not start log configuration,'
                   '{} not found in TOC'.format(str(e)))
@@ -160,5 +161,5 @@ if __name__ == '__main__':
     # The Crazyflie lib doesn't contain anything to keep the application alive,
     # so this is where your application should do something. In our case we
     # are just waiting until we are disconnected.
-    #while le.is_connected:
-    #    time.sleep(1)
+    while le.is_connected:
+       time.sleep(1)
